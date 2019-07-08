@@ -1,0 +1,16 @@
+[{"cash_flow_responsible":22, 
+  "project_name":"Large Hadron Collider",
+  "subjective_probability":73, "model_probability":55, 
+  "forecasted_cash_flow":{"2019-07-01":100000, "2019-08-01":500000},
+  "notes":"El Psy Congroo", "archived":0},
+  {"cash_flow_responsible":87, 
+  "project_name":"Particle Diffuser",
+  "subjective_probability":25, "model_probability":1, 
+  "forecasted_cash_flow":{"2019-07-01":53000, "2019-08-01":20000},
+  "notes":"Is this even a thing?", "archived":0},
+  {"cash_flow_responsible":81, 
+  "project_name":"Nuclear Fission Plant",
+  "subjective_probability":35, "model_probability":6, 
+  "forecasted_cash_flow":{"2019-07-01":6000000, "2019-08-01":300000, "2019-12-01":100000},
+  "notes":"Tell me, Comrade, how does an RMBK reactor explode?", "archived":1}
+]
