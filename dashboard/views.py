@@ -23,8 +23,8 @@ class ProjectListView(ListView):
         today = datetime.today()
         start = datetime(today.year, today.month - 1, 1)
         forecast_dates = [start] # initialize with the last month
-        # want to include the next 17 months in the view
-        for i in range(1,18):
+        # want to include previous month, this month, and the next 12 in the view
+        for i in range(1,13):
             forecast_dates.append(start + relativedelta(months=i))
         
         context["forecast_dates"] = forecast_dates
