@@ -22,15 +22,15 @@
     {% for project in anticipated_projects %}
         <div class="tbody">
             <!-- <form class="tr"> -->
-                <div class="td">{{ project.SalesLeadId }}</div>
+                <div class="td">{{ project.salesleadid }}</div>
                 <!-- <div class="td editable">project.cash_flow_responsible</div> -->
-                <div class="td">{{ project.StatusId }}</div>
-                <div class="td">{{ project.UserInitials }}</div>
-                <div class="td">{{ project.JobTypeId }}</div>
-                <!-- <div class="td editable">project.subjective_probability</div> -->
-                <div class="td">{{ project.QuoteChar }}</div>
+                <div class="td">{{ project.salesleadid__companyid__name }}</div>
+                <div class="td">{{ project.salesleadid__project }}</div>
+                <div class="td">{{ project.jobtypeid }}</div>
+                <div class="td">{{ project.salesleadid__calcprobability|floatformat }}</div>
+                <!-- <div class="td">{{ project.subjectiveprobability }}</div> -->
                 {% for month in rolling_fourteen_months %}
-                    <div class="td">{{project|get_item:month}}</div>
+                    <div class="td">{{ project|get_item:month|if_none }}</div>
                 {% endfor %}
                 <div class="td">{{ project.total }}</div>
                 <div class="td editable">{{ project.notes }}</div>
