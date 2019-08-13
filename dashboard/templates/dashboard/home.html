@@ -1,9 +1,42 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ formset }}
-    </table>
-</form>
+<!-- Load in our extra template filters -->
+{% load dashboard_extras %}
+<div class="table">
+	<div class="thead">
+		<div class="tr">
+            <div class="td">SalesLeadId</div>
+            <!-- <div class="td">Cash Flow Responsibility</div>  -->
+            <div class="td">Client Name</div>
+            <div class="td">Project Name</div>
+            <div class="td">Type</div>
+            <!-- <div class="td">Subjective Probability</div>  -->
+            <div class="td">Model Probability</div>
+            {% for month in rolling_fourteen_months %}
+                <div class="td">{{ month|month_year }}</div>
+            {% endfor %}
+            <div class="td">Total</div> 
+            <div class="td">Notes</div>
+		</div>
+    </div>
+    {% for project in anticipated_projects %}
+        <div class="tbody">
+            <!-- <form class="tr"> -->
+                <div class="td">{{ project.SalesLeadId }}</div>
+                <!-- <div class="td editable">project.cash_flow_responsible</div> -->
+                <div class="td">{{ project.StatusId }}</div>
+                <div class="td">{{ project.UserInitials }}</div>
+                <div class="td">{{ project.JobTypeId }}</div>
+                <!-- <div class="td editable">project.subjective_probability</div> -->
+                <div class="td">{{ project.QuoteChar }}</div>
+                {% for month in rolling_fourteen_months %}
+                    <div class="td">{{project|get_item:month}}</div>
+                {% endfor %}
+                <div class="td">{{ project.total }}</div>
+                <div class="td editable">{{ project.notes }}</div>
+                <!-- <div class="td action"><button type="button" onclick="edit(this);">edit</button></div> -->
+            <!-- </form> -->
+        </div>
+    {% endfor %}
+</div>
 {% endblock content %}
