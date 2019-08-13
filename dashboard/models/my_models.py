@@ -2,9 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import connection
-from .DB_models import Saleslead, Company
+from .DB_models import Salesleadquote, Company, Quotestatus
 
-class AnticipatedProject(models.Model):
+class AnticipatedProject(Salesleadquote):
     def cursorfetchall():
         cursor = connection.cursor()
         cursor.execute("SELECT secuser.UserID, \
@@ -20,35 +20,14 @@ class AnticipatedProject(models.Model):
                         ON secuser.UserID = secrole.UserID")
         return cursor.fetchall()
     
-    CFR_CHOICES = (cursorfetchall())  # cash flow user choices
+    CFR_CHOICES = tuple(cursorfetchall())  # cash flow user choices
 
     aniticipated_proj_id = models.AutoField(db_column="AnticipatedProjectId", primary_key = True)
-    date_added = models.DateTimeField(db_column='DateAdded', auto_now_add = True)
-    date_modified = models.DateTimeField(db_column='DateModified', auto_now = True)
-    sales_lead_id = models.ForeignKey(Saleslead, on_delete = models.DO_NOTHING, db_column='SalesLeadId')
+    #sales_lead_quote_id = models.OneToOneField(Salesleadquote, on_delete = models.DO_NOTHING, db_column='SalesLeadQuoteId', primary_key=True)
     cash_flow_responsible = models.IntegerField(db_column='CashFlowUserId', choices=CFR_CHOICES)
-    company_id = models.ForeignKey(Company, on_delete = models.DO_NOTHING, db_column='CompanyId')
-    project_name = models.TextField(max_length = 100, db_column='ProjectName')
-    project_alias = models.TextField(max_length = 100, db_column='ProjectAlias', default = project_name)
     subjective_probability = models.IntegerField(db_column='SubjectiveProbability', blank=True, null=True)
-    model_probability = models.IntegerField(db_column='CalcProbability')
-    #forecasted_cash_flow = models.TextField(max_length = 500, db_column='Forecasts', blank=True, null=True) # may need to store this as JSON
     notes = models.TextField(max_length = 400, db_column='Notes', blank=True, null=True)
-    archived = models.BooleanField(db_column='Archived', default = 0)
-    deleted = models.BooleanField(db_column='IsDelted', default = 0)
 
     class Meta:
         managed = True
         db_table = 'AnticipatedProjects'
-
-class Forecasts(models.Model):
-    forecast_id = models.AutoField(db_column="ForecastId", primary_key = True)
-    anticipated_project_id = models.ForeignKey(AnticipatedProject, on_delete = models.DO_NOTHING, db_column='AnticipatedProjectId')
-    date_anticipated = models.DateField(db_column="DateAnticipated")
-    amount = models.IntegerField(db_column="AmountAnticipated", null=True)
-    date_added = models.DateTimeField(db_column='DateAdded', auto_now_add = True)
-    date_modified = models.DateTimeField(db_column='DateModified', auto_now = True)
-
-    class Meta:
-        managed = True
-        db_table = 'AnticipatedProjectsForecast'
