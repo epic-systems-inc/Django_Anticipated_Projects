@@ -15,7 +15,7 @@ def home(request):
 
 
 class ProjectListView(ListView):
-    queryset = Salesleadquote.rolling_fourteen_months_objects.my_custom_sql()
+    queryset = Salesleadquote.objects.pivot_table()
     template_name = 'dashboard/home.html'
     context_object_name = 'anticipated_projects'
     
@@ -30,7 +30,6 @@ class ProjectListView(ListView):
             rolling_fourteen_months.append(start + relativedelta(months=i))
         
         context["rolling_fourteen_months"] = [date.strftime("%Y-%m-%d") for date in rolling_fourteen_months]
-        context["keys"] = self.queryset[0].keys()
         return context
 
 
