@@ -1,4 +1,5 @@
 {% extends "dashboard/base.html" %}
+{% load staticfiles %}
 {% block content %}
 <!-- Load in our extra template filters -->
 {% load dashboard_extras %}
@@ -17,12 +18,13 @@
             {% endfor %}
             <div class="td">Total</div> 
             <div class="td">Notes</div>
+            <div class="td"></div>
 		</div>
     </div>
-    {% for project in anticipated_projects %}
-        <div class="tbody">
-            <!-- <form class="tr"> -->
-                <div class="td">{{ project.salesleadid }}</div>
+    <div class="tbody">
+        {% for project in anticipated_projects %}
+            <form class="tr" method="post" action="{% url 'dashboard-home' %}">
+                <div class="td"><a href="https://secure.epicsysinc.com:8888/SalesLead/Edit.aspx?id={{ project.salesleadid }}">{{ project.salesleadid }}</a></div>
                 <!-- <div class="td editable">project.cash_flow_responsible</div> -->
                 <div class="td">{{ project.salesleadid__companyid__name }}</div>
                 <div class="td">{{ project.salesleadid__project }}</div>
@@ -34,9 +36,12 @@
                 {% endfor %}
                 <div class="td">{{ project.total }}</div>
                 <div class="td editable">{{ project.notes }}</div>
-                <!-- <div class="td action"><button type="button" onclick="edit(this);">edit</button></div> -->
-            <!-- </form> -->
-        </div>
-    {% endfor %}
+                <div class="td action"><button type="button" onclick="edit(this);">edit</button></div>
+            </form>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}
+{% block extrajs %}
+    <script  src="{% static 'dashboard/dashboard.js' %}"></script>
+{% endblock %}
