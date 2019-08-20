@@ -1,43 +1,21 @@
-body {
-    width: 90%;
-    max-width: 1300px;
-    min-width: 500px;
-    margin: 5%;
-}
-.table
+body
 {
-	display:table;
-	border-collapse:separate;
-    border-spacing:1px;
-    width: 80%;
-    max-width: 100%;
-    margin: auto;
-    padding: 10px;
-
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+	padding: 30px;
 }
-.thead
+.table-striped tbody tr:nth-of-type(4n+1) td
 {
-	display:table-header-group;
-	color:white;
-	font-weight:bold;
-	background-color:grey;
+   background-color:#EBEDEF; 
 }
-.tbody
-{
-    display:table-row-group;
-    text-align: center;
+th { background:#FFFFFF; }
+th, td:not(.hiddenRow) { font-size: 12px; text-align: center; }
+.hiddenRow {padding: 0 !important;}
+.navbar .navbar-brand {
+    padding-top: 1px;
 }
-.tr
-{
-    display:table-row;
-}
-.td
-{
-	display:table-cell;
-	border:1px solid black;
-	padding:5px;
-}
-.tr.editing .td INPUT
-{
-	width:100px;
-}
+.table>tbody>tr>td {vertical-align: middle !important;}
+.navbar-header > ul> li { padding: 5px; }
+.tableFixHead { overflow-y: auto; height: 600px; }
+.tableFixHead thead th { position: sticky; top: 0; }

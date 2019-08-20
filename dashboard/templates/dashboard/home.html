@@ -1,47 +1,42 @@
 {% extends "dashboard/base.html" %}
-{% load staticfiles %}
+{% load static %}
 {% block content %}
 <!-- Load in our extra template filters -->
 {% load dashboard_extras %}
-<div class="table">
-	<div class="thead">
-		<div class="tr">
-            <div class="td">SalesLeadId</div>
-            <!-- <div class="td">Cash Flow Responsibility</div>  -->
-            <div class="td">Client Name</div>
-            <div class="td">Project Name</div>
-            <div class="td">Type</div>
-            <!-- <div class="td">Subjective Probability</div>  -->
-            <div class="td">Model Probability</div>
-            {% for month in rolling_fourteen_months %}
-                <div class="td">{{ month|month_year }}</div>
-            {% endfor %}
-            <div class="td">Total</div> 
-            <div class="td">Notes</div>
-            <div class="td"></div>
-		</div>
-    </div>
-    <div class="tbody">
-        {% for project in anticipated_projects %}
-            <form class="tr" method="post" action="{% url 'dashboard-home' %}">
-                <div class="td"><a href="https://secure.epicsysinc.com:8888/SalesLead/Edit.aspx?id={{ project.salesleadid }}">{{ project.salesleadid }}</a></div>
-                <!-- <div class="td editable">project.cash_flow_responsible</div> -->
-                <div class="td">{{ project.salesleadid__companyid__name }}</div>
-                <div class="td">{{ project.salesleadid__project }}</div>
-                <div class="td">{{ project.jobtypeid }}</div>
-                <div class="td">{{ project.salesleadid__calcprobability|floatformat }}</div>
-                <!-- <div class="td">{{ project.subjectiveprobability }}</div> -->
+<div class="tableFixHead" style="overflow: auto;">
+    <table id="anticipated-projects-table" class="table table-bordered table-striped table-hover table-responsive{-sm} fixed-table-body" cellspacing='0'>
+        <thead>
+            <tr>
+                <th id="actions">Edit</th>
+                <th id="sales_lead_id">SalesLeadId</th>
+                <th width="3%" id="cash_flow_responsible">Cash Flow Responsibility</th>
+                <th id="client_name">Client Name</th>
+                <th width="9%;" id="project_name">Project Name</th>
+                <th width="8%" id="type">Type</th>
+                <th width="3%" id="subjective_probability">Subjective Probability</th>
+                <th id="model_probability">Model Probability</th>
                 {% for month in rolling_fourteen_months %}
-                    <div class="td">{{ project|get_item:month|if_none }}</div>
+                    <th class="month_year">{{ month|month_year }}</th>
                 {% endfor %}
-                <div class="td">{{ project.total }}</div>
-                <div class="td editable">{{ project.notes }}</div>
-                <div class="td action"><button type="button" onclick="edit(this);">edit</button></div>
-            </form>
-        {% endfor %}
-    </div>
+                <th id="priority">Priority</th>
+                <th width="4%" id="status">Status</th>
+            <tr>
+        </thead>
+        <tbody>
+            {% include 'dashboard/partial_project_list.html' %}
+        </tbody>
+        <!-- <tfoot>
+                <tr>
+                    {% for project in anticipated_projects %}
+                        <th>project.salesleadid__name</th>
+                    {% endfor %}
+                </tr>
+            </tfoot> -->
+    </table>
+</div>
+<div class="modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
 </div>
 {% endblock content %}
-{% block extrajs %}
-    <script  src="{% static 'dashboard/dashboard.js' %}"></script>
-{% endblock %}

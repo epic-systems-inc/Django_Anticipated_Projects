@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import AnticipatedProject
+from .models import Salesleadquote
 
-admin.site.register(AnticipatedProject)
+admin.site.register(Salesleadquote)

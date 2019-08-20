@@ -1,0 +1,31 @@
+{% for project in anticipated_projects %}
+    <tr data-toggle="collapse" data-target="#note_{{project.salesleadquoteid}}" class="accordion-toggle" aria-expanded="false" aria-controls="#{{project.salesleadquoteid}}">
+        <td style>
+            <button type="button" class="btn btn-primary btn-sm js-update-project" data-url="{% url 'project-update' project.salesleadquoteid %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+        </td>
+        <td style><a href="https://secure.epicsysinc.com:8888/SalesLead/Edit.aspx?id={{ project.salesleadid }}" target="_blank">{{ project.salesleadid }}</a></td>
+        <td style>{{ project.userinitials }}</td>
+        <td style>{{ project.salesleadid__companyid__name }}</td>
+        <td>{{ project.salesleadid__project }}</td>
+        <td style>{{ project.jobtypeid__name }}</td>
+        <td style>{{ project.subjective_probability|if_none|percentage }}</td>
+        <td style>{{ project.salesleadid__calcprobability|floatformat|percentage }}</td>
+        {% for month in rolling_fourteen_months %}
+            <td>{{ project|get_item:month|if_none|currency|zero_to_blank }}</td>
+        {% endfor %}
+        <td style>{{ project.priorityid__name }}</td>
+        <td style>{{ project.statusid__name }}</td>
+    </tr>
+    <tr>
+        <td colspan="23" class="hiddenRow">
+            <div class="collapse" id="note_{{project.salesleadquoteid}}">
+                <div class="card card-body">
+                    Notes: {{ project.notes|if_none|zero_to_blank }}
+                </div>
+            </div>
+        </td>
+    </tr>
+        
+{% endfor %}

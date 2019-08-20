@@ -1,0 +1,15 @@
+{% load widget_tweaks %}
+<form method="post" class="js-project-update-form" action="{% url 'project-update' form.instance.pk %}">
+    {% csrf_token %}
+    <div class="modal-header">
+        <h4 class="modal-title" id="projectModalLabel">Edit Quote</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    </div>
+    <div class="modal-body">
+        {% include 'dashboard/partial_project_form.html' %}
+    </div>
+    <div class="model-footer">
+        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" style="margin: 5px;" />
+        <input type="submit" class="btn btn-primary" value="Save Updates" style="margin: 5px;" />
+    </div>
+</form>
