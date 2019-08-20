@@ -1,2 +1,2 @@
-from .my_models import AnticipatedProject
-from .DB_models import Saleslead, Company
+from .crm_models import Salesleadquote, Quotestatus, Quotepriority
+from .pf_models import Jobtype
